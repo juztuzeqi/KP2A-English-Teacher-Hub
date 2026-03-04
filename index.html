@@ -1,49 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Teacher Hub</title>
-
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Teacher Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            padding: 16px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #1f3c88;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            border-bottom: 2px solid #1f3c88;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin: 20px 0 16px;
+            font-size: 1.3rem;
+        }
+        .material-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin: 12px 0;
+        }
+        .material-item span {
+            font-size: 1.2rem;
+        }
+        a {
+            text-decoration: none;
+            color: #0b63ce;
+            font-size: 1.1rem;
+        }
+        select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            margin: 8px 0 8px 0;
+            background: white;
+        }
+        .tip {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 4px;
+            background: #f0f7ff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #1f3c88;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 32px;
+        }
+        .divider-option {
+            background: #f0f0f0;
+            color: #999;
+            font-style: italic;
+            pointer-events: none;
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-    <h1>English Teacher Hub</h1>
-    <p>Gather, Share, Teach.</p>
-</header>
+    <!-- Header -->
+    <div class="card" style="background: #1f3c88; color: white; text-align: center;">
+        <h1 style="color: white; border: none; margin-bottom: 8px;">📚 English Teacher Hub</h1>
+        <p style="opacity: 0.9;">Gather, Share, Teach.</p>
+    </div>
 
-<section>
-    <h2>📊 Semester 1 – 2026</h2>
-    <h3>Monthly Assessments</h3>
-    <ul>
-        <li><a href="https://drive.google.com/drive/u/0/folders/16_Hkf5cLOp4wLqrvIerYV0NJLx_albtA">MA 1</a></li>
-        <li><a href="#">MA 2</a></li>
-        <li><a href="#">MA 3</a></li>
-        <li><a href="#">MA 4</a></li>
-    </ul>
-    <p>Each semester consists of four Monthly Assessments.</p>
-</section>
-   
-<section>
-    <h2>📁 Teaching Resources</h2>
-    <ul>
-        <li><a href="https://drive.google.com/drive/folders/1lCV6Ffe_6IgdrqqUefOIeUJZZvPUfCAo?usp=sharing">🎧 Conversation Books Audio</a></li>
+    <!-- Semester 1 -->
+    <div class="card">
+        <h2>📊 Semester 1 – 2026</h2>
         
-    </ul>
-</section>
+        <!-- MA 1 -->
+        <h3>📋 Monthly Assessment 1</h3>
+        
+        <!-- Materials Link (same for all branches) -->
+        <div class="material-item">
+            <span>📁</span>
+            <a href="https://drive.google.com/drive/u/0/folders/16_Hkf5cLOp4wLqrvIerYV0NJLx_albtA" target="_blank">MA 1 Materials + Results Sheets</a>
+        </div>
+        
+        <!-- Result Entry Dropdown -->
+<div style="margin: 16px 0 8px 0;">
+    <label style="display: block; margin-bottom: 8px; font-weight: 500;">📋 MA 1 Result Entry (Form)</label>
+    
+    <!-- 1. NOTIF DULU (penjelasan untuk siapa) -->
+    <p style="background: #e8f4fd; padding: 8px 12px; border-radius: 6px; margin: 0 0 12px 0; font-size: 0.9rem;">
+        📌 <strong>For teachers who find it difficult to edit sheets on their phones.</strong><br>
+        Select your branch below — the form opens automatically.<br>
+        Otherwise, you may fill in the "MA 1 Results Sheet" directly (inside the Materials folder).
+    </p>
+    
+    <!-- 2. DROPDOWN (sesuai "select your branch below") -->
+    <select onchange="if(this.value) window.open(this.value, '_blank')">
+        <option value="">-- Select branch --</option>
+        <option value="https://forms.gle/kAjd7azdZX2aU7VP6">Mitra Raya</option>
+        <option value="https://forms.gle/mnuGw8yKF4KZUAK97">Nagoya</option>
+        <option value="https://forms.gle/UCwUStx4323wGadr8">Permata Regency</option>
+        <option value="#" disabled style="background:#f0f0f0; color:#999;">──────────</option>
+        <option value="#" disabled style="color:#999;">Kintamani (by request)</option>
+        <option value="#" disabled style="color:#999;">Greenland (by request)</option>
+        <option value="#" disabled style="color:#999;">Pasir Putih (by request)</option>
+        <option value="#" disabled style="color:#999;">Penuin (by request)</option>
+    </select>
+    
+    <!-- 3. TIP MOBILE (penjelasan teknis) -->
+    <p class="tip" style="margin-top: 12px;">📱 Mobile Browser Friendly — No app required. Works on any phone.</p>
+</div>
 
-<section>
-    <h2>📢 Announcements</h2>
-    <p>MA results must be updated no later than the 30th of each month.</p>
-</section>
+    <!-- Teaching Resources -->
+    <div class="card">
+        <h2>📁 Teaching Resources</h2>
+        <div class="material-item">
+            <span>🎧</span>
+            <a href="#">Conversation Books Audio</a>
+        </div>
+    </div>
 
-<footer>
-    © 2026 English Division
-</footer>
+    <!-- Announcements -->
+    <div class="card">
+        <h2>📢 Announcements</h2>
+        <p style="margin-bottom: 12px;">• MA 1 results must be submitted by March 15, 2026.</p>
+        <p>• Next teacher meeting: TBA (To Be Announced)</p>
+    </div>
 
-<script src="js/script.js"></script>
+    <!-- Footer -->
+    <div class="footer">
+        © 2026 English Division
+    </div>
+
 </body>
 </html>

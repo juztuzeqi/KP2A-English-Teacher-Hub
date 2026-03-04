@@ -45,11 +45,16 @@
         }
         .material-item span {
             font-size: 1.2rem;
+            min-width: 28px;
+            text-align: center;
         }
-        a {
+        .material-item a {
             text-decoration: none;
             color: #0b63ce;
             font-size: 1.1rem;
+            line-height: 1.4;
+            word-break: break-word;
+            flex: 1;
         }
         select {
             width: 100%;
@@ -81,6 +86,44 @@
             font-style: italic;
             pointer-events: none;
         }
+        
+        /* MEDIA QUERY UNTUK HP */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .card {
+                padding: 16px;
+            }
+            h1 {
+                font-size: 1.5rem !important;
+            }
+            h2 {
+                font-size: 1.3rem !important;
+            }
+            h3 {
+                font-size: 1.1rem !important;
+            }
+            .material-item {
+                padding: 10px;
+                gap: 8px;
+            }
+            .material-item span {
+                font-size: 1.1rem;
+                min-width: 24px;
+            }
+            .material-item a {
+                font-size: 0.95rem;
+            }
+            select {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+            .tip {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -98,39 +141,40 @@
         <!-- MA 1 -->
         <h3>📋 Monthly Assessment 1</h3>
         
-        <!-- Materials Link (same for all branches) -->
+        <!-- Materials Link -->
         <div class="material-item">
             <span>📁</span>
             <a href="https://drive.google.com/drive/u/0/folders/16_Hkf5cLOp4wLqrvIerYV0NJLx_albtA" target="_blank">MA 1 Materials + Results Sheets</a>
         </div>
         
         <!-- Result Entry Dropdown -->
-<div style="margin: 16px 0 8px 0;">
-    <label style="display: block; margin-bottom: 8px; font-weight: 500;">📋 MA 1 Result Entry (Form)</label>
-    
-    <!-- 1. NOTIF DULU (penjelasan untuk siapa) -->
-    <p style="background: #e8f4fd; padding: 8px 12px; border-radius: 6px; margin: 0 0 12px 0; font-size: 0.9rem;">
-        📌 <strong>For teachers who find it difficult to edit sheets on their phones.</strong><br>
-        Select your branch below — the form opens automatically.<br>
-        Otherwise, you may fill in the "MA 1 Results Sheet" directly (inside the Materials folder).
-    </p>
-    
-    <!-- 2. DROPDOWN (sesuai "select your branch below") -->
-    <select onchange="if(this.value) window.open(this.value, '_blank')">
-        <option value="">-- Select branch --</option>
-        <option value="https://forms.gle/kAjd7azdZX2aU7VP6">Mitra Raya</option>
-        <option value="https://forms.gle/mnuGw8yKF4KZUAK97">Nagoya</option>
-        <option value="https://forms.gle/UCwUStx4323wGadr8">Permata Regency</option>
-        <option value="#" disabled style="background:#f0f0f0; color:#999;">──────────</option>
-        <option value="#" disabled style="color:#999;">Kintamani (by request)</option>
-        <option value="#" disabled style="color:#999;">Greenland (by request)</option>
-        <option value="#" disabled style="color:#999;">Pasir Putih (by request)</option>
-        <option value="#" disabled style="color:#999;">Penuin (by request)</option>
-    </select>
-    
-    <!-- 3. TIP MOBILE (penjelasan teknis) -->
-    <p class="tip" style="margin-top: 12px;">📱 Mobile Browser Friendly — No app required. Works on any phone.</p>
-</div>
+        <div style="margin: 16px 0 8px 0;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 500;">📋 MA 1 Result Entry (Form)</label>
+            
+            <!-- Notif -->
+            <p style="background: #e8f4fd; padding: 8px 12px; border-radius: 6px; margin: 0 0 12px 0; font-size: 0.9rem;">
+                📌 <strong>For teachers who find it difficult to edit sheets on their phones.</strong><br>
+                Select your branch below — the form opens automatically.<br>
+                Otherwise, you may fill in the "MA 1 Results Sheet" directly (inside the Materials folder).
+            </p>
+            
+            <!-- Dropdown -->
+            <select onchange="if(this.value) window.open(this.value, '_blank')">
+                <option value="">-- Select branch --</option>
+                <option value="https://forms.gle/mnuGw8yKF4KZUAK97">Nagoya</option>
+                <option value="https://forms.gle/kAjd7azdZX2aU7VP6">Mitra Raya</option>
+                <option value="https://forms.gle/UCwUStx4323wGadr8">Permata Regency</option>
+                <option value="#" disabled style="background:#f0f0f0; color:#999;">──────────</option>
+                <option value="#" disabled style="color:#999;">Kintamani (by request)</option>
+                <option value="#" disabled style="color:#999;">Greenland (by request)</option>
+                <option value="#" disabled style="color:#999;">Pasir Putih (by request)</option>
+                <option value="#" disabled style="color:#999;">Penuin (by request)</option>
+            </select>
+            
+            <!-- Tip Mobile -->
+            <p class="tip" style="margin-top: 12px;">📱 Mobile Browser Friendly — No app required. Works on any phone.</p>
+        </div>
+    </div>
 
     <!-- Teaching Resources -->
     <div class="card">

@@ -17,6 +17,8 @@
             --border: #e0e0e0;
             --success: #28a745;
             --muted: #6c757d;
+            --warning: #ffc107;
+            --warning-bg: #fff3cd;
         }
         body {
             font-family: Arial, sans-serif;
@@ -138,6 +140,36 @@
             background: white;
         }
         
+        /* READ FIRST NOTICE */
+        .read-first {
+            background: var(--warning-bg);
+            border: 1px solid var(--warning);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .read-first-icon {
+            font-size: 2.5rem;
+            min-width: 60px;
+            text-align: center;
+        }
+        .read-first-text {
+            flex: 1;
+        }
+        .read-first-text p {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 4px;
+        }
+        .read-first-text small {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
         @media (max-width: 600px) {
             body { padding: 10px; }
             .card { padding: 16px; }
@@ -145,6 +177,14 @@
             h3 { font-size: 1.1rem; }
             .material-item { padding: 8px 10px; }
             .whatsapp-method { padding: 12px; }
+            .read-first { 
+                padding: 12px; 
+                gap: 12px;
+            }
+            .read-first-icon {
+                font-size: 2rem;
+                min-width: 50px;
+            }
         }
     </style>
 </head>
@@ -167,12 +207,22 @@
             <span style="color: #28a745; font-size: 0.9rem; font-weight: normal;">(April - Week 1 )</span>
         </h3>
         
+               
         <!-- Materials Link -->
         <div class="material-item">
             <span>📁</span>
-            <a href="https://drive.google.com/drive/folders/1QwVQZbbQF1cjLEMYLAWF-jJh4QkY83Xx?usp=drive_link" target="_blank">MA 2 Materials & Answer Keys (New File)</a>
+            <a href="https://drive.google.com/drive/folders/1QwVQZbbQF1cjLEMYLAWF-jJh4QkY83Xx?usp=drive_link" target="_blank">MA 2 Kit (New Files)</a>
         </div>
                 
+ <!-- READ FIRST NOTICE - dengan icon baru! -->
+        <div class="read-first">
+            <div class="read-first-icon">📢</div>
+            <div class="read-first-text">
+                <p>"READ FIRST" first! <span style="font-size: 0.9rem; font-weight: normal;">(Yes, read it before anything else.)</span></p>
+                <small>⚠️ Before using MA 2 files, please read the guide.</small>
+            </div>
+        </div>
+
         <!-- WhatsApp Method -->
         <div class="whatsapp-method">
             <p style="font-weight: bold; color: #075E54;">📱 Submit Scores via WhatsApp (No Forms!):</p>
@@ -213,6 +263,7 @@
         </div>
     </div>
 
+   
     <!-- Teaching Resources -->
     <div class="card">
         <h2>📁 Teaching Resources</h2>
@@ -225,13 +276,12 @@
     <!-- Announcements -->
     <div class="card">
         <h2>📢 Announcements</h2>
-        <p style="margin-bottom: 8px;">✅ MA 1 results archived as of March 16, 2026</p>
         <p style="margin-bottom: 8px;">📝 MA 2 will be held in Week 1 of April 2026</p>
         <p style="margin-bottom: 8px;">⏰ MA 2 score submission deadline: April 15, 2026</p>
         <p style="margin-bottom: 0;">📌 Next teacher meeting: TBA</p>
     </div>
 
-    <!-- MA 1 Archive -->
+ <!-- MA 1 Archive -->
     <div class="card">
         <h2>📦 MA 1 Archive 
             <span class="badge archived">ARCHIVED</span>
@@ -243,7 +293,7 @@
         </div>
         
         <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">
-            📌 Period: February - March 2026 (Closed)
+            📌 Period: February - March 2026 (Closed; archived March 16, 2026)
         </p>
     </div>
 

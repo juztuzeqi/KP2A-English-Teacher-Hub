@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MA Plan 2026 - English Teacher Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --primary: #1f3c88;
+            --primary-dark: #0f2a5e;
+            --text: #2c3e50;
+            --light-bg: #f8f9fa;
+            --border: #e0e0e0;
+            --success: #28a745;
+            --muted: #6c757d;
+            --warning: #ffc107;
+            --warning-bg: #fff3cd;
+            --grade-badge: #3498db;
+            --card-radius: 12px;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f0f2f8;
+            padding: 20px 16px;
+            color: var(--text);
+            line-height: 1.45;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        /* header + navigation */
+        .nav-card {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: 16px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .back-link {
+            background: var(--light-bg);
+            padding: 8px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid var(--border);
+        }
+        .back-link:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .title-badge {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .title-badge h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--primary);
+        }
+        .plan-badge {
+            background: #e9ecef;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        /* grade grid layout */
+        .grades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+        }
+        .grade-card {
+            background: white;
+            border-radius: var(--card-radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.1s ease;
+            border: 1px solid var(--border);
+        }
+        .grade-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            padding: 16px 20px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .grade-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0;
+            letter-spacing: -0.3px;
+        }
+        .grade-level {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .ma-list {
+            padding: 8px 0 12px;
+        }
+        .ma-item {
+            padding: 14px 20px;
+            border-bottom: 1px solid #edf2f7;
+            transition: background 0.1s;
+        }
+        .ma-item:last-child {
+            border-bottom: none;
+        }
+        .ma-term {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0b2b4e;
+            display: inline-block;
+            background: #eef2ff;
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+        .ma-term span {
+            font-weight: 600;
+        }
+        .ma-desc {
+            font-size: 0.92rem;
+            line-height: 1.45;
+            color: #2d3e50;
+            margin-top: 6px;
+            padding-left: 6px;
+            border-left: 3px solid var(--primary);
+            padding-left: 12px;
+        }
+        .topic-list {
+            margin-top: 8px;
+            padding-left: 18px;
+            list-style-type: disc;
+            color: #4a627a;
+            font-size: 0.85rem;
+        }
+        .topic-list li {
+            margin: 4px 0;
+        }
+        .empty-note {
+            color: var(--muted);
+            font-style: italic;
+            font-size: 0.85rem;
+            padding: 8px 20px 12px;
+        }
+        .info-banner {
+            background: var(--warning-bg);
+            border-left: 5px solid var(--warning);
+            padding: 14px 20px;
+            margin-top: 28px;
+            border-radius: 14px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .info-banner-icon {
+            font-size: 1.8rem;
+        }
+        .info-banner-text p {
+            margin-bottom: 4px;
+            font-weight: 600;
+            color: #856404;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+        }
+        @media (max-width: 760px) {
+            .grades-grid {
+                grid-template-columns: 1fr;
+            }
+            .grade-header h2 {
+                font-size: 1.4rem;
+            }
+            .nav-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .ma-desc {
+                font-size: 0.88rem;
+            }
+        }
+        hr {
+            margin: 8px 0;
+            border-color: var(--border);
+        }
+        .badge-plan {
+            background: #e9ecef;
+            color: #1e466e;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 30px;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+        .tooltip-note {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- navigation & header like main hub -->
+    <div class="nav-card">
+        <a href="#" class="back-link" onclick="history.back(); return false;">← Back to Teacher Hub</a>
+        <div class="title-badge">
+            <h1>📋 Monthly Assessment Plan 2026</h1>
+            <span class="plan-badge">Full Academic Year</span>
+        </div>
+        <div style="font-size:0.85rem; color:var(--muted);">
+            📌 Grades 1–9 · MA 1 to MA 4 / mastery tests
+        </div>
+    </div>
+
+    <!-- grid for all grades content based on PDF -->
+    <div class="grades-grid">
+        
+        <!-- GRADE 1 -->
+        <div class="grade-card">
+            <div class="grade-header">
+                <h2>Grade 1</h2>
+                <span class="grade-level">Beginner</span>
+            </div>
+            <div class="ma-list">
+                <div class="ma-item"><div class="ma-term">📘 MA 1</div><div class="ma-desc">Preliminary Unit + Unit 1-3: About myself/school, Pronouns (I, He, She, We, They, You, It), To Be (Am, Is, Are)</div></div>
+                <div class="ma-item"><div class="ma-term">📗 MA 2</div><div class="ma-desc">Unit 4-7: This/That, A/An, Possessive Adjectives (My, His, Her, Your, Its)</div></div>
+                <div class="ma-item"><div class="ma-term">📙 MA 3</div><div class="ma-desc">Unit 8-9: Simple Present Tense, Present Continuous Tense</div></div>
+                <div class="ma-item"><div class="ma-term">📕 MA 4</div><div class="ma-desc">Unit 10-11: Can/Cannot, Prepositions (On, In, Under, Behind, Over, In front of)</div></div>
+            </div>
+        </div>
+        
+        <!-- GRADE 2 -->
+        <div class="grade-card">
+            <div class="grade-header">
+                <h2>Grade 2</h2>
+                <span class="grade-level">Elementary</span>
+            </div>
+            <div class="ma-list">
+                <div class="ma-item"><div class="ma-term">📘 MA 1</div><div class="ma-desc">Unit 1: Noun, Singular & Plural Nouns, Countable & Uncountable. Unit 2: Article A, An, The, Quantifiers</div></div>
+                <div class="ma-item"><div class="ma-term">📗 MA 2</div><div class="ma-desc">Unit 2: Prepositions. Unit 3: Personal Pronouns (Subject & Object), Possessive Adjectives. Unit 4: Adjectives (overview)</div></div>
+                <div class="ma-item"><div class="ma-term">📙 MA 3</div><div class="ma-desc">Unit 5: Question Words. Unit 6: Present Continuous Tense</div></div>
+                <div class="ma-item"><div class="ma-term">📕 MA 4</div><div class="ma-desc">Unit 7: Simple Present Tense vs Present Continuous Tense. Unit 8: Simple Past Tense & Past Continuous Tense</div></div>
+            </div>
+        </div>
+        
+        <!-- GRADE 3 (from pdf page 2) -->
+        <div class="grade-card">
+            <div class="grade-header">
+                <h2>Grade 3</h2>
+                <span class="grade-level">Building</span>
+            </div>
+            <div class="ma-list">
+                <div class="ma-item"><div class="ma-term">📘 MA 1</div><div class="ma-desc">Unit 1-4: Nouns (Proper/Common, Singular/Plural, Countable/Uncountable). Unit 5: Personal Pronouns, Possessive Adjectives & Pronouns</div></div>
+                <div class="ma-item"><div class="ma-term">📗 MA 2</div><div class="ma-desc">Unit 6-7: Punctuation & Capital Letter. Unit 8-9: Prepositions & Articles. Unit 10: Question Words</div></div>
+                <div class="ma-item"><div class="ma-term">📙 MA 3</div><div class="ma-desc">Unit 11: Linking Verb. Unit 12-13: Simple Present & Simple Past Tense. Unit 14: Present Continuous Tense</div></div>
+                <div class="ma-item"><div class="ma-term">📕 MA 4</div><div class="ma-desc">Unit 15-19: Past Continuous & Simple Future Tense, Adjectives, Adverbs, Gender</div></div>
+            </div>
+        </div>
+        
+        <!-- GRADE 4 -->
+        <div class="grade-card">
+            <div class="grade-header">
+                <h2>Grade 4</h2>
+                <span class="grade-level">Intermediate</span>
+            </div>
+            <div class="ma-list">
+                <div class="ma-item"><div class="ma-term">📘 MA 1</div><div class="ma-desc">Unit 1: Nouns (Review: Common/Proper, Singular/Plural, Countable/Uncountable). Unit 2-3: Articles & Collective Nouns</div></div>
+                <div class="ma-item"><div class="ma-term">📗 MA 2</div><div class="ma-desc">Unit 4-8: Personal Pronouns, Verb Agreement, Linking Verb; Prepositions; Statements & Questions, Positive/Negative Sentences</div></div>
+                <div class="ma-item"><div class="ma-term">📙 MA 3</div><div class="ma-desc">Unit 9-14: Question Words, Why & Because, Review Do/Did; Short Answers & Replies; Simple Present & Present Continuous Tense</div></div>
+                <div class="ma-item"><div class="ma-term">📕 MA 4</div><div class="ma-desc">Unit 15-22: Simple Past & Past Continuous; Present Perfect & Simple Future; Conjunctions, Adjectives (Comparative/Superlative); Can/Could; Punctuation</div></div>
+            </div>
+        </div>
+        
+        <!-- GRADE 5 -->
+        <div class="grade-card">
+            <div class="grade-header">
+                <h2>Grade 5</h2>
+                <span class="grade-level">Upper Primary</span>
+            </div>
+            <div class="ma-list">
+                <div class="ma-item"><div class="ma-term">📘 MA 1</div><div class="ma-desc">Cluster 1: Noun (a–k all subtopics)</div></div>
+                <div class="ma-item"><div class="ma-term">📗 MA 2</div><div class="ma-desc">Cluster 2: Verb (a–e all subtopics). Cluster 3.a-c: Simple Present Tense, Present Continuous Tense, Form of Verbs</div></div>
+                <div class="ma-item"><div class="ma-term">📙 MA 3</div><div class="ma-desc">Cluster 3.d-i: Irregular Verbs, Simple Past, Past Continuous, Present Perfect, Past Perfect Tense</div></div>
+                <div class="ma-item"><div class="ma-term">📕 MA 4</div><div class="ma-desc">Cluster 3.j-k: Simple Future Tense, "Going to" form. Cluster 4-5: Grammar Exercise 1 & 2 (comprehensive review)</div></div>
+            </div>
+        </div>
+        
+        <!-- GRADE 6 -->
+        <div class="grade-card">
+            <div class="grade-header">
+                <h2>Grade 6</h2>
+                <span class="grade-level">Pre-Secondary</span>
+            </div>
+            <div class="ma-list">
+                <div class="ma-item"><div class="ma-term">📘 MA 1</div><div class="ma-desc">Unit 1-4: Punctuation, Tense Sequence, Modals, Adjectives. Unit 5-6: Forming Adjectives, Comparison of Adjectives</div></div>
+                <div class="ma-item"><div class="ma-term">📗 MA 2</div><div class="ma-desc">Unit 7-10: Adverbs, Forming Adverbs, Comparison, Adverbials of Duration. Unit 11-12: Preposition, Prepositional Phrase & Phrasal Verb. Unit 13: Conditional Sentence Type 1</div></div>
+                <div class="ma-item"><div class="ma-term">📙 MA 3</div><div class="ma-desc">Unit 14-16: All Pronouns (Personal, Possessive, Reflexive, Relative, Indefinite, Interrogative, Demonstrative, Reciprocal). Unit 17-19: Conjunctions & Sentence Connectors</div></div>
+                <div class="ma-item"><div class="ma-term">📕 MA 4</div><div class="ma-desc">Unit 20-25: Types of Sentences, Sentence Structure, WH- Questions, Positive/Negative Statements & Questions, Question Tags. Unit 26-29: Direct/Indirect Speech, Indirect Questions, Transitive/Intransitive Verbs, Active/Passive Voice</div></div>
+            </div>
+        </div>
+        
+        <!-- GRADE 7 -->
+        <div class="grade-card">
+            <div class="grade-header">
+                <h2>Grade 7</h2>
+                <span class="grade-level">Junior Secondary</span>
+            </div>
+            <div class="ma-list">
+                <div class="ma-item"><div class="ma-term">📘 MA 1</div><div class="ma-desc">Unit 1-12: Nouns & Possession (Common/Proper, Countable/Uncountable, Singular/Plural, Quantifiers, Articles, Some/Any, Collective Nouns, Forming Nouns, Noun Phrases, Possession, Gender).</div></div>
+                <div class="ma-item"><div class="ma-term">📗 MA 2</div><div class="ma-desc">Unit 13-17: Verb Fundamentals (Verb Agreement, Forming Verbs, Forms of Verb, Verbs 'to be', 'to have', 'to do').</div></div>
+                <div class="ma-item"><div class="ma-term">📙 MA 3</div><div class="ma-desc">Unit 18-23: Tenses Fundamentals: Present & Past (Simple Present, Present Continuous, Present Perfect, Simple Past, Past Continuous, Past Perfect).</div></div>
+                <div class="ma-item"><div class="ma-term">📕 MA 4</div><div class="ma-desc">Unit 24-27: Tenses Fundamentals: Future & Synthesis (Simple Future, Going to, Infinitives, Synthesis and Transformation Skills).</div></div>
+            </div>
+        </div>
+        
+        <!-- GRADE 8 (with Mid-Course & Final) -->
+        <div class="grade-card">
+            <div class="grade-header">
+                <h2>Grade 8</h2>
+                <span class="grade-level">Intermediate Plus</span>
+            </div>
+            <div class="ma-list">
+                <div class="ma-item"><div class="ma-term">📘 MA 1</div><div class="ma-desc">Unit 1-4: Prepositions & Intro to Adjectives (Preposition, More Prepositions, Prepositional Phrases/Phrasal Verbs, Adjectives)</div></div>
+                <div class="ma-item"><div class="ma-term">📗 MA 2</div><div class="ma-desc">Unit 5-7: Adjectives Deep Dive (Forming Adjectives, Comparison, Adjectival Phrases)</div></div>
+                <div class="ma-item"><div class="ma-term">📙 MA 3</div><div class="ma-desc">Unit 8-12: Adverbs & Modals (Adverbs, Forming Adverbs, Comparison, Adverbial Phrases, Adverbials of Duration)</div></div>
+                <div class="ma-item"><div class="ma-term">📕 MA 4</div><div class="ma-desc">Unit 13-16: Connectors & Sentence Types (Modals, Conjunctions 1&2, Sentence Connectors) <span class="badge-plan">MID-COURSE MASTERY TEST</span></div></div>
+                <div class="ma-item"><div class="ma-term">📖 MA 5</div><div class="ma-desc">Unit 17-21: Sentence Crafting & Questions (Types of Sentences, Sentence Structure, Positive/Negative Sentences & Responses, Question Tags)</div></div>
+                <div class="ma-item"><div class="ma-term">📖 MA 6</div><div class="ma-desc">Unit 22-23: Verbal Forms & Voice (Gerund & Infinitive, Active & Passive Voice)</div></div>
+                <div class="ma-item"><div class="ma-term">📖 MA 7</div><div class="ma-desc">Unit 24-27: Reported Speech & Transitivity (Direct/Indirect Statements, Indirect Questions, Transformation of Speech, Transitive/Intransitive Verbs)</div></div>
+                <div class="ma-item"><div class="ma-term">🏆 MA 8</div><div class="ma-desc">Unit 28-30: Synthesis & Conditionals (Linking Messages/Combining Sentences, Synthesis & Transformation Skills, Conditional Sentences) <span class="badge-plan">FINAL LEVEL-UP TEST</span></div></div>
+            </div>
+        </div>
+        
+        <!-- GRADE 9 (with Mid & Final) -->
+        <div class="grade-card">
+            <div class="grade-header">
+                <h2>Grade 9</h2>
+                <span class="grade-level">Advanced</span>
+            </div>
+            <div class="ma-list">
+                <div class="ma-item"><div class="ma-term">📘 MA 1</div><div class="ma-desc">Unit 1 → Review of Nouns & Possession (all subtopics)</div></div>
+                <div class="ma-item"><div class="ma-term">📗 MA 2</div><div class="ma-desc">Unit 2–3: Review of Verbs & Quantifiers + Be/Have/Do exercises</div></div>
+                <div class="ma-item"><div class="ma-term">📙 MA 3</div><div class="ma-desc">Unit 4-7: Review of Verbs & Quantifiers (continued) + Be/Have/Do exercises (detailed reinforcement)</div></div>
+                <div class="ma-item"><div class="ma-term">📕 MA 4</div><div class="ma-desc">Unit 8-13: Tenses Review (Present & Past) + Stative Verbs, Present Perfect Progressive <span class="badge-plan">MID-COURSE MASTERY TEST</span></div></div>
+                <div class="ma-item"><div class="ma-term">📖 MA 5</div><div class="ma-desc">Unit 14-20: Tenses Lanjutan & Future (Past Perfect Progressive, All Future Tenses, Going to & other futures)</div></div>
+                <div class="ma-item"><div class="ma-term">📖 MA 6</div><div class="ma-desc">Unit 21-22: Conditionals, Wishes, & Modals Lanjutan</div></div>
+                <div class="ma-item"><div class="ma-term">📖 MA 7</div><div class="ma-desc">Unit 23-27: Competency Test, Comparison, Prepositions Review Lanjutan</div></div>
+                <div class="ma-item"><div class="ma-term">🏆 MA 8</div><div class="ma-desc">Unit 28-33: Pronouns, Conjunctions, Speech Review, and Bonus (Idioms, Phrasal Verbs) <span class="badge-plan">FINAL LEVEL-UP TEST</span></div></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Informative banner + tips aligned with MA Plan usage -->
+    <div class="info-banner">
+        <div class="info-banner-icon">📌</div>
+        <div class="info-banner-text">
+            <p>🗓️ MA Plan Overview – Academic Year 2026</p>
+            <small>Monthly Assessment (MA) schedule covers 4–8 

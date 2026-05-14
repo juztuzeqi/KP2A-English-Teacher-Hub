@@ -22,7 +22,6 @@
             margin: 0 auto;
         }
 
-        /* Header */
         .header {
             margin-bottom: 28px;
             border-left: 5px solid #3b82f6;
@@ -46,7 +45,6 @@
             font-size: 0.95rem;
         }
 
-        /* Dua kolom utama */
         .dashboard {
             display: flex;
             flex-wrap: wrap;
@@ -153,7 +151,6 @@
             background: #fecaca;
         }
 
-        /* Table */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 14px;
@@ -229,16 +226,6 @@
             margin-top: 4px;
         }
 
-        .copy-message {
-            margin-top: 16px;
-            font-size: 0.8rem;
-            color: #15803d;
-            background: #dcfce7;
-            padding: 8px 12px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
         .footer-note {
             margin-top: 30px;
             text-align: center;
@@ -274,22 +261,20 @@
             <div class="section-title">
                 <span>📋</span> Paste raw data
             </div>
-            <textarea id="rawCsvInput" rows="8" placeholder="Example (messy is fine):
-Clemi, 1, 19, 5, 5
-Jelita, 1, 21, 6, 4
- Sho Yen, 2, 9, 11, 9
-Roretta, 2, 4, 5, 4
-Jayden Tan, 3, 21, 16, 10
-Revan Hariono, 5, 19, 9, 7
-Cindy, 5, 4 , 4, 1
-Resma, 9, 90  , 9, 15"></textarea>
+            <textarea id="rawCsvInput" rows="8" placeholder="Example (dictation score 0–100 directly from teacher):
+Clemi, 1, 85, 5, 5
+Jelita, 1, 78, 6, 4
+Sho Yen, 2, 92, 11, 9
+Jayden Tan, 3, 88, 16, 10
+Resma, 9, 75, 9, 15"></textarea>
             <div class="button-group">
                 <button id="processBtn" class="primary">✨ Calculate & Show</button>
                 <button id="copyTableBtn" class="secondary">📋 Copy Table (CSV)</button>
                 <button id="resetBtn" class="warning">🗑️ Reset</button>
             </div>
             <div style="font-size: 0.75rem; color: #475569; margin-top: 8px;">
-                ⚡ Expected format: <strong>Name, Grade, Spelling_Correct, PartA_Correct, PartB_Correct</strong><br>
+                ⚡ Expected format: <strong>Name, Grade, Dictation_Score, PartA_Correct, PartB_Correct</strong><br>
+                • <strong>Dictation score</strong> = 0–100 (teacher gives directly based on sentence dictation)<br>
                 • Extra spaces / trailing dots are auto-cleaned.<br>
                 • Names with spaces are supported (e.g., "Sho Yen").
             </div>
@@ -305,7 +290,7 @@ Resma, 9, 90  , 9, 15"></textarea>
                         <tr>
                             <th>Student Name</th>
                             <th>Grade</th>
-                            <th>Spelling Score</th>
+                            <th>Dictation Score</th>
                             <th>Part A Score</th>
                             <th>Part B Score</th>
                         </tr>
@@ -319,24 +304,26 @@ Resma, 9, 90  , 9, 15"></textarea>
         </div>
     </div>
     <div class="footer-note">
-        📌 Formula: Score per section = (Correct / Max for that grade) × 100<br>
-        Max questions per grade: Grade1(23,20,10) | Grade2(30,20,10) | Grade3(25,20,10) | Grade4(51,20,20) | Grade5(54,20,20) | Grade6(59,20,20) | Grade7(46,20,20) | Grade8(41,20,20) | Grade9(100,20,20)<br>
+        📌 Formula: Score per section = (Score / Max for that grade) × 100<br>
+        • <strong>Dictation</strong>: Max = 100 (teacher gives score 0–100 directly, no need to count individual errors)<br>
+        • <strong>Part A & Part B</strong>: Max depends on grade (see table below)<br>
+        Grade 1: (100,20,10) | Grade 2: (100,20,10) | Grade 3: (100,20,10) | Grade 4: (100,20,20) | Grade 5: (100,20,20) | Grade 6: (100,20,20) | Grade 7: (100,20,20) | Grade 8: (100,20,20) | Grade 9: (100,20,20)<br>
         🎨 Green ≥75, Orange 50–74, Red &lt;50
     </div>
 </div>
 
 <script>
-    // VLOOKUP Table: Grade -> { spellingMax, partAMax, partBMax }
+    // GRADE_MAX now uses 100 for Dictation (teacher gives score 0–100 directly)
     const GRADE_MAX = {
-        1: { spelling: 23, partA: 20, partB: 10 },
-        2: { spelling: 30, partA: 20, partB: 10 },
-        3: { spelling: 25, partA: 20, partB: 10 },
-        4: { spelling: 51, partA: 20, partB: 20 },
-        5: { spelling: 54, partA: 20, partB: 20 },
-        6: { spelling: 59, partA: 20, partB: 20 },
-        7: { spelling: 46, partA: 20, partB: 20 },
-        8: { spelling: 41, partA: 20, partB: 20 },
-        9: { spelling: 100, partA: 20, partB: 20 }
+        1: { dictation: 100, partA: 20, partB: 10 },
+        2: { dictation: 100, partA: 20, partB: 10 },
+        3: { dictation: 100, partA: 20, partB: 10 },
+        4: { dictation: 100, partA: 20, partB: 20 },
+        5: { dictation: 100, partA: 20, partB: 20 },
+        6: { dictation: 100, partA: 20, partB: 20 },
+        7: { dictation: 100, partA: 20, partB: 20 },
+        8: { dictation: 100, partA: 20, partB: 20 },
+        9: { dictation: 100, partA: 20, partB: 20 }
     };
 
     function cleanRawLine(line) {
@@ -355,20 +342,20 @@ Resma, 9, 90  , 9, 15"></textarea>
         let cleanedParts = parts.map(p => p.trim());
         let name = cleanedParts[0];
         let grade = parseInt(cleanedParts[1], 10);
-        let spellingCorrect = parseInt(cleanedParts[2], 10);
+        let dictationScore = parseInt(cleanedParts[2], 10);
         let partACorrect = parseInt(cleanedParts[3], 10);
         let partBCorrect = parseInt(cleanedParts[4], 10);
         
-        if (isNaN(grade) || isNaN(spellingCorrect) || isNaN(partACorrect) || isNaN(partBCorrect)) return null;
-        return { name, grade, spellingCorrect, partACorrect, partBCorrect };
+        if (isNaN(grade) || isNaN(dictationScore) || isNaN(partACorrect) || isNaN(partBCorrect)) return null;
+        return { name, grade, dictationScore, partACorrect, partBCorrect };
     }
 
-    function calculateScore(benar, maks) {
+    function calculateScore(score, maks) {
         if (maks === 0) return 0;
-        let score = (benar / maks) * 100;
-        if (score > 100) score = 100;
-        if (score < 0) score = 0;
-        return Math.round(score * 10) / 10;
+        let result = (score / maks) * 100;
+        if (result > 100) result = 100;
+        if (result < 0) result = 0;
+        return Math.round(result * 10) / 10;
     }
 
     function processStudent(student) {
@@ -376,21 +363,21 @@ Resma, 9, 90  , 9, 15"></textarea>
         if (!maxData) {
             return {
                 ...student,
-                spellingScore: null,
-                partAScore: null,
-                partBScore: null,
+                dictationPercent: null,
+                partAPercent: null,
+                partBPercent: null,
                 valid: false
             };
         }
-        const spellingScore = calculateScore(student.spellingCorrect, maxData.spelling);
-        const partAScore = calculateScore(student.partACorrect, maxData.partA);
-        const partBScore = calculateScore(student.partBCorrect, maxData.partB);
+        const dictationPercent = calculateScore(student.dictationScore, maxData.dictation);
+        const partAPercent = calculateScore(student.partACorrect, maxData.partA);
+        const partBPercent = calculateScore(student.partBCorrect, maxData.partB);
         
         return {
             ...student,
-            spellingScore: spellingScore,
-            partAScore: partAScore,
-            partBScore: partBScore,
+            dictationPercent: dictationPercent,
+            partAPercent: partAPercent,
+            partBPercent: partBPercent,
             maxData: maxData,
             valid: true
         };
@@ -417,33 +404,33 @@ Resma, 9, 90  , 9, 15"></textarea>
         for (const s of studentsProcessed) {
             if (!s.valid) {
                 html += `<tr style="opacity:0.7;">
-                            <td>${escapeHtml(s.name)}</td>
-                            <td>${s.grade} ⚠️</td>
-                            <td colspan="3">Grade not recognized (1-9 only)</td>
-                         </tr>`;
+                             <td>${escapeHtml(s.name)}</td>
+                             <td>${s.grade} ⚠️</td>
+                             <td colspan="3">Grade not recognized (1-9 only)</td>
+                          </tr>`;
                 continue;
             }
             
-            const spellingClass = getScoreClass(s.spellingScore);
-            const partAClass = getScoreClass(s.partAScore);
-            const partBClass = getScoreClass(s.partBScore);
+            const dictationClass = getScoreClass(s.dictationPercent);
+            const partAClass = getScoreClass(s.partAPercent);
+            const partBClass = getScoreClass(s.partBPercent);
             
             html += `<tr>
                         <td><strong>${escapeHtml(s.name)}</strong></td>
                         <td>${s.grade}</td>
                         <td>
-                            <span class="${spellingClass}">${s.spellingScore}%</span>
-                            <div class="detail-cell">${formatDetail(s.spellingCorrect, s.maxData.spelling)}</div>
+                            <span class="${dictationClass}">${s.dictationPercent}%</span>
+                            <div class="detail-cell">${formatDetail(s.dictationScore, s.maxData.dictation)}</div>
                         </td>
                         <td>
-                            <span class="${partAClass}">${s.partAScore}%</span>
+                            <span class="${partAClass}">${s.partAPercent}%</span>
                             <div class="detail-cell">${formatDetail(s.partACorrect, s.maxData.partA)}</div>
                         </td>
                         <td>
-                            <span class="${partBClass}">${s.partBScore}%</span>
+                            <span class="${partBClass}">${s.partBPercent}%</span>
                             <div class="detail-cell">${formatDetail(s.partBCorrect, s.maxData.partB)}</div>
                         </td>
-                     </tr>`;
+                      </tr>`;
         }
         tbody.innerHTML = html;
     }
@@ -479,7 +466,7 @@ Resma, 9, 90  , 9, 15"></textarea>
         
         if (studentsRaw.length === 0) {
             renderTable([]);
-            document.getElementById("copyStatus").innerHTML = "❌ No valid data. Check format: Name,Grade,Spelling,PartA,PartB";
+            document.getElementById("copyStatus").innerHTML = "❌ No valid data. Check format: Name,Grade,Dictation,PartA,PartB";
             return;
         }
         
@@ -498,7 +485,7 @@ Resma, 9, 90  , 9, 15"></textarea>
         }
         
         let csvRows = [];
-        csvRows.push(["Name", "Grade", "Spelling_Correct", "Spelling_Max", "Spelling_%", 
+        csvRows.push(["Name", "Grade", "Dictation_Score", "Dictation_Max", "Dictation_%", 
                       "PartA_Correct", "PartA_Max", "PartA_%", 
                       "PartB_Correct", "PartB_Max", "PartB_%"]);
         
@@ -510,9 +497,9 @@ Resma, 9, 90  , 9, 15"></textarea>
             const maxD = s.maxData;
             csvRows.push([
                 s.name, s.grade,
-                s.spellingCorrect, maxD.spelling, s.spellingScore,
-                s.partACorrect, maxD.partA, s.partAScore,
-                s.partBCorrect, maxD.partB, s.partBScore
+                s.dictationScore, maxD.dictation, s.dictationPercent,
+                s.partACorrect, maxD.partA, s.partAPercent,
+                s.partBCorrect, maxD.partB, s.partBPercent
             ]);
         }
         
@@ -545,26 +532,26 @@ Resma, 9, 90  , 9, 15"></textarea>
     document.getElementById("copyTableBtn").addEventListener("click", copyTableAsCSV);
     document.getElementById("resetBtn").addEventListener("click", resetAll);
     
-    const defaultExample = `Clemi, 1, 19, 5, 5
-Jelita, 1, 21, 6, 4
-Nelsen, 1, 21, 20, 6
-Jayson, 1, 20, 10, 7
-Carlos, 1, 18, 20, 4
-Sho Yen, 2, 9, 11, 9
-Roretta, 2, 4, 5, 4
-Jayden Tan, 3, 21, 16, 10
-Revan Renaldi, 3, 19, 16, 10
-Rizka, 4, 40, 15, 19
-Yisella, 4, 9, 14, 20
-Ian, 4, 10, 15, 17
-Catur, 4, 2, 4, 5
-Revan Hariono, 5, 19, 9, 7
-Cindy, 5, 4, 4, 1
-Shireen, 5, 11, 4, 3
-Genus, 6, 17, 10, 7
-Michael, 7, 37, 25, 10
-Resma, 9, 90, 9, 15
-Marco, 9, 92, 14, 13`;
+    const defaultExample = `Clemi, 1, 85, 5, 5
+Jelita, 1, 78, 6, 4
+Nelsen, 1, 92, 20, 6
+Jayson, 1, 88, 10, 7
+Carlos, 1, 75, 20, 4
+Sho Yen, 2, 90, 11, 9
+Roretta, 2, 65, 5, 4
+Jayden Tan, 3, 88, 16, 10
+Revan Renaldi, 3, 82, 16, 10
+Rizka, 4, 70, 15, 19
+Yisella, 4, 68, 14, 20
+Ian, 4, 75, 15, 17
+Catur, 4, 55, 4, 5
+Revan Hariono, 5, 79, 9, 7
+Cindy, 5, 60, 4, 1
+Shireen, 5, 72, 4, 3
+Genus, 6, 85, 10, 7
+Michael, 7, 88, 25, 10
+Resma, 9, 75, 9, 15
+Marco, 9, 82, 14, 13`;
     document.getElementById("rawCsvInput").value = defaultExample;
     setTimeout(() => {
         processAndRender();

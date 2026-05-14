@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Calculator - English Teacher Hub</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 32px 24px;
+            color: #0f172a;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 28px;
+            border-left: 5px solid #3b82f6;
+            padding-left: 20px;
+            background: white;
+            padding: 20px 24px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0 0 8px 0;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .header p {
+            margin: 0;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        /* Dua kolom utama */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .input-panel {
+            flex: 1.2;
+            min-width: 280px;
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .output-panel {
+            flex: 2.5;
+            min-width: 400px;
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            color: #1e293b;
+        }
+
+        textarea {
+            width: 100%;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            padding: 14px;
+            font-family: 'Courier New', 'Fira Code', monospace;
+            font-size: 13px;
+            color: #0f172a;
+            resize: vertical;
+            margin-bottom: 18px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            border: none;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button.primary {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        button.primary:hover {
+            background: #2563eb;
+        }
+
+        button.secondary {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        button.secondary:hover {
+            background: #cbd5e1;
+        }
+
+        button.warning {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        button.warning:hover {
+            background: #fecaca;
+        }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #1e293b;
+            padding: 14px 10px;
+            font-weight: 600;
+            border-bottom: 2px solid #e2e8f0;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+        .score-cell {
+            font-weight: 600;
+        }
+
+        .score-high {
+            color: #15803d;
+            background: #dcfce7;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 24px;
+            font-size: 0.8rem;
+            min-width: 65px;
+            text-align: center;
+        }
+
+        .score-mid {
+            color: #b45309;
+            background: #ffedd5;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 24px;
+            font-size: 0.8rem;
+            min-width: 65px;
+            text-align: center;
+        }
+
+        .score-low {
+            color: #9f1239;
+            background: #ffe4e6;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 24px;
+            font-size: 0.8rem;
+            min-width: 65px;
+            text-align: center;
+        }
+
+        .detail-cell {
+            font-size: 0.7rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .copy-message {
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: #15803d;
+            background: #dcfce7;
+            padding: 8px 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+
+        @media (max-width: 780px) {
+            .dashboard {
+                flex-direction: column;
+            }
+            .output-panel {
+                min-width: auto;
+            }
+            th, td {
+                font-size: 0.75rem;
+                padding: 8px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📊 Score Calculator</h1>
+        <p>Paste messy CSV from WhatsApp → automatically calculate scores per section based on Grade</p>
+    </div>
+
+    <div class="dashboard">
+        <div class="input-panel">
+            <div class="section-title">
+                <span>📋</span> Paste raw data
+            </div>
+            <textarea id="rawCsvInput" rows="8" placeholder="Example (messy is fine):
+Clemi, 1, 19, 5, 5
+Jelita, 1, 21, 6, 4
+ Sho Yen, 2, 9, 11, 9
+Roretta, 2, 4, 5, 4
+Jayden Tan, 3, 21, 16, 10
+Revan Hariono, 5, 19, 9, 7
+Cindy, 5, 4 , 4, 1
+Resma, 9, 90  , 9, 15"></textarea>
+            <div class="button-group">
+                <button id="processBtn" class="primary">✨ Calculate & Show</button>
+                <button id="copyTableBtn" class="secondary">📋 Copy Table (CSV)</button>
+                <button id="resetBtn" class="warning">🗑️ Reset</button>
+            </div>
+            <div style="font-size: 0.75rem; color: #475569; margin-top: 8px;">
+                ⚡ Expected format: <strong>Name, Grade, Spelling_Correct, PartA_Correct, PartB_Correct</strong><br>
+                • Extra spaces / trailing dots are auto-cleaned.<br>
+                • Names with spaces are supported (e.g., "Sho Yen").
+            </div>
+        </div>
+
+        <div class="output-panel">
+            <div class="section-title">
+                <span>🏆</span> Results (Scores per Section)
+            </div>
+            <div class="table-wrapper" id="tableContainer">
+                <table id="resultTable">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Grade</th>
+                            <th>Spelling Score</th>
+                            <th>Part A Score</th>
+                            <th>Part B Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="5" style="text-align:center; padding: 40px;">⬅️ Paste data & click "Calculate & Show"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="copyStatus" style="font-size: 0.75rem; margin-top: 14px; text-align: right;"></div>
+        </div>
+    </div>
+    <div class="footer-note">
+        📌 Formula: Score per section = (Correct / Max for that grade) × 100<br>
+        Max questions per grade: Grade1(23,20,10) | Grade2(30,20,10) | Grade3(25,20,10) | Grade4(51,20,20) | Grade5(54,20,20) | Grade6(59,20,20) | Grade7(46,20,20) | Grade8(41,20,20) | Grade9(100,20,20)<br>
+        🎨 Green ≥75, Orange 50–74, Red &lt;50
+    </div>
+</div>
+
+<script>
+    // VLOOKUP Table: Grade -> { spellingMax, partAMax, partBMax }
+    const GRADE_MAX = {
+        1: { spelling: 23, partA: 20, partB: 10 },
+        2: { spelling: 30, partA: 20, partB: 10 },
+        3: { spelling: 25, partA: 20, partB: 10 },
+        4: { spelling: 51, partA: 20, partB: 20 },
+        5: { spelling: 54, partA: 20, partB: 20 },
+        6: { spelling: 59, partA: 20, partB: 20 },
+        7: { spelling: 46, partA: 20, partB: 20 },
+        8: { spelling: 41, partA: 20, partB: 20 },
+        9: { spelling: 100, partA: 20, partB: 20 }
+    };
+
+    function cleanRawLine(line) {
+        let trimmed = line.trim();
+        if (trimmed === "") return "";
+        if (trimmed.endsWith(".")) trimmed = trimmed.slice(0, -1).trim();
+        trimmed = trimmed.replace(/,\s+/g, ",");
+        trimmed = trimmed.replace(/^\s+/, "");
+        return trimmed;
+    }
+
+    function parseCSVLine(line) {
+        if (!line) return null;
+        let parts = line.split(",");
+        if (parts.length < 5) return null;
+        let cleanedParts = parts.map(p => p.trim());
+        let name = cleanedParts[0];
+        let grade = parseInt(cleanedParts[1], 10);
+        let spellingCorrect = parseInt(cleanedParts[2], 10);
+        let partACorrect = parseInt(cleanedParts[3], 10);
+        let partBCorrect = parseInt(cleanedParts[4], 10);
+        
+        if (isNaN(grade) || isNaN(spellingCorrect) || isNaN(partACorrect) || isNaN(partBCorrect)) return null;
+        return { name, grade, spellingCorrect, partACorrect, partBCorrect };
+    }
+
+    function calculateScore(benar, maks) {
+        if (maks === 0) return 0;
+        let score = (benar / maks) * 100;
+        if (score > 100) score = 100;
+        if (score < 0) score = 0;
+        return Math.round(score * 10) / 10;
+    }
+
+    function processStudent(student) {
+        const maxData = GRADE_MAX[student.grade];
+        if (!maxData) {
+            return {
+                ...student,
+                spellingScore: null,
+                partAScore: null,
+                partBScore: null,
+                valid: false
+            };
+        }
+        const spellingScore = calculateScore(student.spellingCorrect, maxData.spelling);
+        const partAScore = calculateScore(student.partACorrect, maxData.partA);
+        const partBScore = calculateScore(student.partBCorrect, maxData.partB);
+        
+        return {
+            ...student,
+            spellingScore: spellingScore,
+            partAScore: partAScore,
+            partBScore: partBScore,
+            maxData: maxData,
+            valid: true
+        };
+    }
+
+    function getScoreClass(score) {
+        if (score >= 75) return "score-high";
+        if (score >= 50) return "score-mid";
+        return "score-low";
+    }
+
+    function formatDetail(correct, max) {
+        return `${correct}/${max}`;
+    }
+
+    function renderTable(studentsProcessed) {
+        const tbody = document.querySelector("#resultTable tbody");
+        if (!studentsProcessed.length) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 40px;">✅ No valid data. Paste CSV and click Calculate.</td></tr>`;
+            return;
+        }
+        
+        let html = "";
+        for (const s of studentsProcessed) {
+            if (!s.valid) {
+                html += `<tr style="opacity:0.7;">
+                            <td>${escapeHtml(s.name)}</td>
+                            <td>${s.grade} ⚠️</td>
+                            <td colspan="3">Grade not recognized (1-9 only)</td>
+                         </tr>`;
+                continue;
+            }
+            
+            const spellingClass = getScoreClass(s.spellingScore);
+            const partAClass = getScoreClass(s.partAScore);
+            const partBClass = getScoreClass(s.partBScore);
+            
+            html += `<tr>
+                        <td><strong>${escapeHtml(s.name)}</strong></td>
+                        <td>${s.grade}</td>
+                        <td>
+                            <span class="${spellingClass}">${s.spellingScore}%</span>
+                            <div class="detail-cell">${formatDetail(s.spellingCorrect, s.maxData.spelling)}</div>
+                        </td>
+                        <td>
+                            <span class="${partAClass}">${s.partAScore}%</span>
+                            <div class="detail-cell">${formatDetail(s.partACorrect, s.maxData.partA)}</div>
+                        </td>
+                        <td>
+                            <span class="${partBClass}">${s.partBScore}%</span>
+                            <div class="detail-cell">${formatDetail(s.partBCorrect, s.maxData.partB)}</div>
+                        </td>
+                     </tr>`;
+        }
+        tbody.innerHTML = html;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function processAndRender() {
+        let rawText = document.getElementById("rawCsvInput").value;
+        if (!rawText.trim()) {
+            renderTable([]);
+            document.getElementById("copyStatus").innerHTML = "⚠️ Paste CSV data first.";
+            return;
+        }
+        
+        const lines = rawText.split(/\r?\n/);
+        const studentsRaw = [];
+        for (let line of lines) {
+            if (line.trim() === "") continue;
+            let cleanLine = cleanRawLine(line);
+            let parsed = parseCSVLine(cleanLine);
+            if (parsed) {
+                studentsRaw.push(parsed);
+            }
+        }
+        
+        if (studentsRaw.length === 0) {
+            renderTable([]);
+            document.getElementById("copyStatus").innerHTML = "❌ No valid data. Check format: Name,Grade,Spelling,PartA,PartB";
+            return;
+        }
+        
+        const processed = studentsRaw.map(st => processStudent(st));
+        renderTable(processed);
+        const validCount = processed.filter(p => p.valid).length;
+        document.getElementById("copyStatus").innerHTML = `✅ ${validCount} student(s) processed. Click "Copy Table" to get CSV.`;
+        
+        window.lastProcessedData = processed;
+    }
+    
+    function copyTableAsCSV() {
+        if (!window.lastProcessedData || window.lastProcessedData.length === 0) {
+            document.getElementById("copyStatus").innerHTML = "📭 No data to copy. Calculate first.";
+            return;
+        }
+        
+        let csvRows = [];
+        csvRows.push(["Name", "Grade", "Spelling_Correct", "Spelling_Max", "Spelling_%", 
+                      "PartA_Correct", "PartA_Max", "PartA_%", 
+                      "PartB_Correct", "PartB_Max", "PartB_%"]);
+        
+        for (const s of window.lastProcessedData) {
+            if (!s.valid) {
+                csvRows.push([s.name, s.grade, "error", "", "", "", "", "", "", "", ""]);
+                continue;
+            }
+            const maxD = s.maxData;
+            csvRows.push([
+                s.name, s.grade,
+                s.spellingCorrect, maxD.spelling, s.spellingScore,
+                s.partACorrect, maxD.partA, s.partAScore,
+                s.partBCorrect, maxD.partB, s.partBScore
+            ]);
+        }
+        
+        const csvContent = csvRows.map(row => row.map(cell => {
+            if (typeof cell === 'string' && (cell.includes(',') || cell.includes('"'))) {
+                return `"${cell.replace(/"/g, '""')}"`;
+            }
+            return cell;
+        }).join(",")).join("\n");
+        
+        navigator.clipboard.writeText(csvContent).then(() => {
+            document.getElementById("copyStatus").innerHTML = "📋 CSV copied! Ready to paste into Google Sheets.";
+            setTimeout(() => {
+                if (document.getElementById("copyStatus").innerHTML.includes("CSV copied"))
+                    document.getElementById("copyStatus").innerHTML = "✅ Ready.";
+            }, 2000);
+        }).catch(() => {
+            document.getElementById("copyStatus").innerHTML = "❌ Failed to copy. Manual copy from table.";
+        });
+    }
+    
+    function resetAll() {
+        document.getElementById("rawCsvInput").value = "";
+        renderTable([]);
+        window.lastProcessedData = [];
+        document.getElementById("copyStatus").innerHTML = "";
+    }
+    
+    document.getElementById("processBtn").addEventListener("click", processAndRender);
+    document.getElementById("copyTableBtn").addEventListener("click", copyTableAsCSV);
+    document.getElementById("resetBtn").addEventListener("click", resetAll);
+    
+    const defaultExample = `Clemi, 1, 19, 5, 5
+Jelita, 1, 21, 6, 4
+Nelsen, 1, 21, 20, 6
+Jayson, 1, 20, 10, 7
+Carlos, 1, 18, 20, 4
+Sho Yen, 2, 9, 11, 9
+Roretta, 2, 4, 5, 4
+Jayden Tan, 3, 21, 16, 10
+Revan Renaldi, 3, 19, 16, 10
+Rizka, 4, 40, 15, 19
+Yisella, 4, 9, 14, 20
+Ian, 4, 10, 15, 17
+Catur, 4, 2, 4, 5
+Revan Hariono, 5, 19, 9, 7
+Cindy, 5, 4, 4, 1
+Shireen, 5, 11, 4, 3
+Genus, 6, 17, 10, 7
+Michael, 7, 37, 25, 10
+Resma, 9, 90, 9, 15
+Marco, 9, 92, 14, 13`;
+    document.getElementById("rawCsvInput").value = defaultExample;
+    setTimeout(() => {
+        processAndRender();
+    }, 100);
+</script>
+</body>
+</html>

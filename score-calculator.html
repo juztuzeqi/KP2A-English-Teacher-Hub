@@ -142,6 +142,15 @@
             background: #cbd5e1;
         }
 
+        button.success {
+            background: #10b981;
+            color: white;
+        }
+
+        button.success:hover {
+            background: #059669;
+        }
+
         button.warning {
             background: #fee2e2;
             color: #b91c1c;
@@ -181,10 +190,6 @@
 
         tr:hover td {
             background: #f8fafc;
-        }
-
-        .score-cell {
-            font-weight: 600;
         }
 
         .score-high {
@@ -269,7 +274,8 @@ Jason Li, 3, 88, 16, 10
 Rere, 9, 75, 9, 15"></textarea>
             <div class="button-group">
                 <button id="processBtn" class="primary">✨ Calculate & Show</button>
-                <button id="copyTableBtn" class="secondary">📋 Copy Table (CSV)</button>
+                <button id="copyTableBtn" class="secondary">📋 Copy CSV (and paste to Whatsapp)</button>
+                <button id="downloadCsvBtn" class="success">💾 Download CSV</button>
                 <button id="resetBtn" class="warning">🗑️ Reset</button>
             </div>
             <div style="font-size: 0.75rem; color: #475569; margin-top: 8px;">
@@ -313,7 +319,6 @@ Rere, 9, 75, 9, 15"></textarea>
 </div>
 
 <script>
-    // GRADE_MAX now uses 100 for Dictation (teacher gives score 0–100 directly)
     const GRADE_MAX = {
         1: { dictation: 100, partA: 20, partB: 10 },
         2: { dictation: 100, partA: 20, partB: 10 },
@@ -361,23 +366,13 @@ Rere, 9, 75, 9, 15"></textarea>
     function processStudent(student) {
         const maxData = GRADE_MAX[student.grade];
         if (!maxData) {
-            return {
-                ...student,
-                dictationPercent: null,
-                partAPercent: null,
-                partBPercent: null,
-                valid: false
-            };
+            return { ...student, dictationPercent: null, partAPercent: null, partBPercent: null, valid: false };
         }
-        const dictationPercent = calculateScore(student.dictationScore, maxData.dictation);
-        const partAPercent = calculateScore(student.partACorrect, maxData.partA);
-        const partBPercent = calculateScore(student.partBCorrect, maxData.partB);
-        
         return {
             ...student,
-            dictationPercent: dictationPercent,
-            partAPercent: partAPercent,
-            partBPercent: partBPercent,
+            dictationPercent: calculateScore(student.dictationScore, maxData.dictation),
+            partAPercent: calculateScore(student.partACorrect, maxData.partA),
+            partBPercent: calculateScore(student.partBCorrect, maxData.partB),
             maxData: maxData,
             valid: true
         };
@@ -411,26 +406,13 @@ Rere, 9, 75, 9, 15"></textarea>
                 continue;
             }
             
-            const dictationClass = getScoreClass(s.dictationPercent);
-            const partAClass = getScoreClass(s.partAPercent);
-            const partBClass = getScoreClass(s.partBPercent);
-            
             html += `<tr>
                         <td><strong>${escapeHtml(s.name)}</strong></td>
                         <td>${s.grade}</td>
-                        <td>
-                            <span class="${dictationClass}">${s.dictationPercent}%</span>
-                            <div class="detail-cell">${formatDetail(s.dictationScore, s.maxData.dictation)}</div>
-                        </td>
-                        <td>
-                            <span class="${partAClass}">${s.partAPercent}%</span>
-                            <div class="detail-cell">${formatDetail(s.partACorrect, s.maxData.partA)}</div>
-                        </td>
-                        <td>
-                            <span class="${partBClass}">${s.partBPercent}%</span>
-                            <div class="detail-cell">${formatDetail(s.partBCorrect, s.maxData.partB)}</div>
-                        </td>
-                      </tr>`;
+                        <td><span class="${getScoreClass(s.dictationPercent)}">${s.dictationPercent}%</span><div class="detail-cell">${formatDetail(s.dictationScore, s.maxData.dictation)}</div></td>
+                        <td><span class="${getScoreClass(s.partAPercent)}">${s.partAPercent}%</span><div class="detail-cell">${formatDetail(s.partACorrect, s.maxData.partA)}</div></td>
+                        <td><span class="${getScoreClass(s.partBPercent)}">${s.partBPercent}%</span><div class="detail-cell">${formatDetail(s.partBCorrect, s.maxData.partB)}</div></td>
+                     </tr>`;
         }
         tbody.innerHTML = html;
     }
@@ -445,62 +427,33 @@ Rere, 9, 75, 9, 15"></textarea>
         });
     }
 
-    function processAndRender() {
+    function getProcessedData() {
         let rawText = document.getElementById("rawCsvInput").value;
-        if (!rawText.trim()) {
-            renderTable([]);
-            document.getElementById("copyStatus").innerHTML = "⚠️ Paste CSV data first.";
-            return;
-        }
-        
+        if (!rawText.trim()) return [];
         const lines = rawText.split(/\r?\n/);
         const studentsRaw = [];
         for (let line of lines) {
             if (line.trim() === "") continue;
-            let cleanLine = cleanRawLine(line);
-            let parsed = parseCSVLine(cleanLine);
-            if (parsed) {
-                studentsRaw.push(parsed);
-            }
+            let parsed = parseCSVLine(cleanRawLine(line));
+            if (parsed) studentsRaw.push(parsed);
         }
-        
-        if (studentsRaw.length === 0) {
-            renderTable([]);
-            document.getElementById("copyStatus").innerHTML = "❌ No valid data. Check format: Name,Grade,Dictation,PartA,PartB";
-            return;
-        }
-        
-        const processed = studentsRaw.map(st => processStudent(st));
-        renderTable(processed);
-        const validCount = processed.filter(p => p.valid).length;
-        document.getElementById("copyStatus").innerHTML = `✅ ${validCount} student(s) processed. Click "Copy Table" to get CSV.`;
-        
-        window.lastProcessedData = processed;
+        return studentsRaw.map(st => processStudent(st));
     }
-    
+
+    // ============================================================
+    // COPY CSV: hanya 5 kolom (Name, Grade, Dictation_Score, PartA_Correct, PartB_Correct)
+    // ============================================================
     function copyTableAsCSV() {
-        if (!window.lastProcessedData || window.lastProcessedData.length === 0) {
+        if (!window.lastProcessedData || !window.lastProcessedData.length) {
             document.getElementById("copyStatus").innerHTML = "📭 No data to copy. Calculate first.";
             return;
         }
         
-        let csvRows = [];
-        csvRows.push(["Name", "Grade", "Dictation_Score", "Dictation_Max", "Dictation_%", 
-                      "PartA_Correct", "PartA_Max", "PartA_%", 
-                      "PartB_Correct", "PartB_Max", "PartB_%"]);
+        let csvRows = [["Name", "Grade", "Dictation_Score", "PartA_Correct", "PartB_Correct"]];
         
         for (const s of window.lastProcessedData) {
-            if (!s.valid) {
-                csvRows.push([s.name, s.grade, "error", "", "", "", "", "", "", "", ""]);
-                continue;
-            }
-            const maxD = s.maxData;
-            csvRows.push([
-                s.name, s.grade,
-                s.dictationScore, maxD.dictation, s.dictationPercent,
-                s.partACorrect, maxD.partA, s.partAPercent,
-                s.partBCorrect, maxD.partB, s.partBPercent
-            ]);
+            if (!s.valid) continue;
+            csvRows.push([s.name, s.grade, s.dictationScore, s.partACorrect, s.partBCorrect]);
         }
         
         const csvContent = csvRows.map(row => row.map(cell => {
@@ -511,14 +464,68 @@ Rere, 9, 75, 9, 15"></textarea>
         }).join(",")).join("\n");
         
         navigator.clipboard.writeText(csvContent).then(() => {
-            document.getElementById("copyStatus").innerHTML = "📋 CSV copied! Ready to paste into Google Sheets.";
+            document.getElementById("copyStatus").innerHTML = "📋 CSV copied! (Name,Grade,Dictation,PartA,PartB) Ready to paste or send.";
             setTimeout(() => {
-                if (document.getElementById("copyStatus").innerHTML.includes("CSV copied"))
+                if (document.getElementById("copyStatus").innerHTML.includes("copied"))
                     document.getElementById("copyStatus").innerHTML = "✅ Ready.";
-            }, 2000);
+            }, 2500);
         }).catch(() => {
-            document.getElementById("copyStatus").innerHTML = "❌ Failed to copy. Manual copy from table.";
+            document.getElementById("copyStatus").innerHTML = "❌ Failed to copy.";
         });
+    }
+
+    // ============================================================
+    // DOWNLOAD CSV: hanya 5 kolom (Name, Grade, Dictation_Score, PartA_Correct, PartB_Correct)
+    // ============================================================
+    function downloadCSV() {
+        if (!window.lastProcessedData || !window.lastProcessedData.length) {
+            document.getElementById("copyStatus").innerHTML = "📭 No data to download. Calculate first.";
+            return;
+        }
+        
+        let csvRows = [["Name", "Grade", "Dictation_Score", "PartA_Correct", "PartB_Correct"]];
+        
+        for (const s of window.lastProcessedData) {
+            if (!s.valid) continue;
+            csvRows.push([s.name, s.grade, s.dictationScore, s.partACorrect, s.partBCorrect]);
+        }
+        
+        const csvContent = csvRows.map(row => row.map(cell => {
+            if (typeof cell === 'string' && (cell.includes(',') || cell.includes('"'))) {
+                return `"${cell.replace(/"/g, '""')}"`;
+            }
+            return cell;
+        }).join(",")).join("\n");
+        
+        const blob = new Blob([csvContent], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        const now = new Date();
+        const timestamp = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}_${now.getHours()}-${now.getMinutes()}`;
+        a.download = `scores_MA3_${timestamp}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        document.getElementById("copyStatus").innerHTML = "💾 CSV file downloaded! Send it to coordinator via WhatsApp.";
+        setTimeout(() => {
+            if (document.getElementById("copyStatus").innerHTML.includes("downloaded"))
+                document.getElementById("copyStatus").innerHTML = "✅ Done.";
+        }, 3000);
+    }
+
+    function processAndRender() {
+        const processed = getProcessedData();
+        if (!processed.length) {
+            renderTable([]);
+            document.getElementById("copyStatus").innerHTML = "❌ No valid data. Check format.";
+            return;
+        }
+        renderTable(processed);
+        window.lastProcessedData = processed;
+        const validCount = processed.filter(p => p.valid).length;
+        document.getElementById("copyStatus").innerHTML = `✅ ${validCount} student(s) processed. Use "Copy CSV" or "Download CSV".`;
     }
     
     function resetAll() {
@@ -530,6 +537,7 @@ Rere, 9, 75, 9, 15"></textarea>
     
     document.getElementById("processBtn").addEventListener("click", processAndRender);
     document.getElementById("copyTableBtn").addEventListener("click", copyTableAsCSV);
+    document.getElementById("downloadCsvBtn").addEventListener("click", downloadCSV);
     document.getElementById("resetBtn").addEventListener("click", resetAll);
     
     const defaultExample = `Cleo, 1, 85, 5, 5
@@ -538,24 +546,22 @@ Nelson, 1, 92, 20, 6
 Jayson, 1, 88, 10, 7
 Charles, 1, 75, 20, 4
 Sunlight, 2, 90, 11, 9
-Rose, 2, 65, 5, 4
+Rosa, 2, 65, 5, 4
 Jason Li, 3, 88, 16, 10
 Rivaldo Da Silva, 3, 82, 16, 10
 Rizki, 4, 70, 15, 19
 Gisella, 4, 68, 14, 20
-Ian, 4, 75, 15, 17
+Rian, 4, 75, 15, 17
 Artur, 4, 55, 4, 5
-Revan Sutanto, 5, 79, 9, 7
+Renaldi Haryanto, 5, 79, 9, 7
 Chintya, 5, 60, 4, 1
 Sharon, 5, 72, 4, 3
-Gerald, 6, 85, 10, 7
+Gerrald, 6, 85, 10, 7
 Mikha, 7, 88, 25, 10
 Rere, 9, 75, 9, 15
 Maroon, 9, 82, 14, 13`;
     document.getElementById("rawCsvInput").value = defaultExample;
-    setTimeout(() => {
-        processAndRender();
-    }, 100);
+    setTimeout(() => { processAndRender(); }, 100);
 </script>
 </body>
 </html>

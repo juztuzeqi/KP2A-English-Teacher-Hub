@@ -262,11 +262,11 @@
                 <span>📋</span> Paste raw data
             </div>
             <textarea id="rawCsvInput" rows="8" placeholder="Example (dictation score 0–100 directly from teacher):
-Clemi, 1, 85, 5, 5
-Jelita, 1, 78, 6, 4
-Sho Yen, 2, 92, 11, 9
-Jayden Tan, 3, 88, 16, 10
-Resma, 9, 75, 9, 15"></textarea>
+Cleo, 1, 85, 5, 5
+Jelly, 1, 78, 6, 4
+Sunlight, 2, 92, 11, 9
+Jason Li, 3, 88, 16, 10
+Rere, 9, 75, 9, 15"></textarea>
             <div class="button-group">
                 <button id="processBtn" class="primary">✨ Calculate & Show</button>
                 <button id="copyTableBtn" class="secondary">📋 Copy Table (CSV)</button>
@@ -276,7 +276,7 @@ Resma, 9, 75, 9, 15"></textarea>
                 ⚡ Expected format: <strong>Name, Grade, Dictation_Score, PartA_Correct, PartB_Correct</strong><br>
                 • <strong>Dictation score</strong> = 0–100 (teacher gives directly based on sentence dictation)<br>
                 • Extra spaces / trailing dots are auto-cleaned.<br>
-                • Names with spaces are supported (e.g., "Sho Yen").
+                • Names with spaces are supported (e.g., "Jason Li").
             </div>
         </div>
 
@@ -532,26 +532,26 @@ Resma, 9, 75, 9, 15"></textarea>
     document.getElementById("copyTableBtn").addEventListener("click", copyTableAsCSV);
     document.getElementById("resetBtn").addEventListener("click", resetAll);
     
-    const defaultExample = `Clemi, 1, 85, 5, 5
-Jelita, 1, 78, 6, 4
-Nelsen, 1, 92, 20, 6
+    const defaultExample = `Cleo, 1, 85, 5, 5
+Jelly, 1, 78, 6, 4
+Nelson, 1, 92, 20, 6
 Jayson, 1, 88, 10, 7
-Carlos, 1, 75, 20, 4
-Sho Yen, 2, 90, 11, 9
-Roretta, 2, 65, 5, 4
-Jayden Tan, 3, 88, 16, 10
-Revan Renaldi, 3, 82, 16, 10
-Rizka, 4, 70, 15, 19
-Yisella, 4, 68, 14, 20
+Charles, 1, 75, 20, 4
+Sunlight, 2, 90, 11, 9
+Rose, 2, 65, 5, 4
+Jason Li, 3, 88, 16, 10
+Rivaldo Da Silva, 3, 82, 16, 10
+Rizki, 4, 70, 15, 19
+Gisella, 4, 68, 14, 20
 Ian, 4, 75, 15, 17
-Catur, 4, 55, 4, 5
-Revan Hariono, 5, 79, 9, 7
+Artur, 4, 55, 4, 5
+Revan Sutanto, 5, 79, 9, 7
 Cindy, 5, 60, 4, 1
 Shireen, 5, 72, 4, 3
-Genus, 6, 85, 10, 7
-Michael, 7, 88, 25, 10
-Resma, 9, 75, 9, 15
-Marco, 9, 82, 14, 13`;
+Gerald, 6, 85, 10, 7
+Mikha, 7, 88, 25, 10
+Rere, 9, 75, 9, 15
+Maroon, 9, 82, 14, 13`;
     document.getElementById("rawCsvInput").value = defaultExample;
     setTimeout(() => {
         processAndRender();

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Teacher Hub</title>
@@ -82,34 +83,6 @@
             word-break: break-word;
             flex: 1;
         }
-        .whatsapp-method {
-            background: #e8f5e9;
-            border-left: 4px solid #25D366;
-            padding: 16px;
-            border-radius: 6px;
-            margin: 16px 0;
-        }
-        .whatsapp-method p {
-            margin-bottom: 8px;
-        }
-        .whatsapp-method code {
-            background: #fff;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin: 4px 0;
-            border: 1px dashed #25D366;
-        }
-        .example {
-            background: #fff;
-            padding: 12px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 0.9rem;
-            margin: 12px 0;
-            border: 1px solid var(--border);
-        }
         .tip {
             font-size: 0.85rem;
             color: var(--muted);
@@ -125,66 +98,62 @@
             font-size: 0.9rem;
             margin-top: 32px;
         }
-        .divider {
-            height: 1px;
-            background: var(--border);
-            margin: 20px 0;
-        }
-        select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            font-size: 0.95rem;
-            margin: 8px 0;
-            background: white;
-        }
         
-        /* READ FIRST NOTICE */
-        .read-first {
-            background: var(--warning-bg);
-            border: 1px solid var(--warning);
-            border-radius: 8px;
-            padding: 16px;
+        /* Calculator promo */
+        .calculator-promo {
+            background: linear-gradient(135deg, #1f3c88 0%, #2a5298 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 24px 20px;
             margin: 16px 0;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .read-first-icon {
-            font-size: 2.5rem;
-            min-width: 60px;
             text-align: center;
         }
-        .read-first-text {
-            flex: 1;
+        .calculator-promo h3 {
+            color: white;
+            margin: 0 0 8px 0;
+            font-size: 1.5rem;
         }
-        .read-first-text p {
-            font-size: 1.1rem;
+        .calculator-promo a {
+            display: inline-block;
+            background: #ffc107;
+            color: #1f3c88;
             font-weight: bold;
-            color: #856404;
-            margin-bottom: 4px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 12px 28px;
+            border-radius: 40px;
+            margin: 12px 0;
+            transition: 0.2s;
         }
-        .read-first-text small {
-            color: #666;
-            font-size: 0.9rem;
+        .calculator-promo a:hover {
+            background: #ffda6a;
+            transform: scale(1.02);
+        }
+        .calculator-promo small {
+            display: block;
+            margin-top: 8px;
+            opacity: 0.9;
+            font-size: 0.85rem;
+        }
+        
+        .fallback-note {
+            background: #fef9e6;
+            border-left: 4px solid #ffc107;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-top: 16px;
+            font-size: 0.85rem;
+        }
+        .fallback-note a {
+            color: #1f3c88;
         }
         
         @media (max-width: 600px) {
             body { padding: 10px; }
             .card { padding: 16px; }
             h2 { font-size: 1.3rem; }
-            h3 { font-size: 1.1rem; }
-            .material-item { padding: 8px 10px; }
-            .whatsapp-method { padding: 12px; }
-            .read-first { 
-                padding: 12px; 
-                gap: 12px;
-            }
-            .read-first-icon {
-                font-size: 2rem;
-                min-width: 50px;
-            }
+            .calculator-promo { padding: 16px; }
+            .calculator-promo a { font-size: 1rem; padding: 10px 20px; }
         }
     </style>
 </head>
@@ -196,31 +165,36 @@
         <p style="opacity: 0.9;">Gather, Share, Teach.</p>
     </div>
 
-    <!-- Semester 1 - 2026 (No Active MA) -->
+    <!-- Semester 1 - 2026 with MA 3 announcement -->
     <div class="card">
         <h2>📊 Semester 1 – 2026</h2>
-        <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">
-            📌 No active Monthly Assessment. Next MA will be announced soon.
-        </p>
+        
+        <!-- MA 3 Active Info -->
+        <div style="background: #e3f2fd; border-left: 4px solid #1f3c88; padding: 16px; border-radius: 8px; margin-top: 8px;">
+            <p style="font-weight: bold; margin-bottom: 8px;">📌 MA 3 is OPEN</p>
+            <p style="margin-bottom: 4px;">🗓️ <strong>Period:</strong> May 27 – Early June 2026</p>
+            <p>✅ Submit scores <strong>after</strong> the assessment period ends.</p>
+        </div>
     </div>
 
-<!-- Teaching Resources -->
-<div class="card">
-    <h2>📁 Teaching Resources</h2>
-    <div class="material-item">
-        <span>🎧</span>
-        <a href="https://drive.google.com/drive/folders/1lCV6Ffe_6IgdrqqUefOIeUJZZvPUfCAo">Conversation Books Audio</a>
+    <!-- Teaching Resources -->
+    <div class="card">
+        <h2>📁 Teaching Resources</h2>
+        <div class="material-item">
+            <span>🎧</span>
+            <a href="https://drive.google.com/drive/folders/1lCV6Ffe_6IgdrqqUefOIeUJZZvPUfCAo">Conversation Books Audio</a>
+        </div>
+        <div class="material-item">
+            <span>🧭</span>
+            <a href="https://juztuzeqi.github.io/KP2A-English-Teacher-Hub/phonicsbooksguide.html">How to Use the Phonics Books</a>
+        </div>
     </div>
-    <div class="material-item">
-        <span>🧭</span>
-        <a href="phonicsbooksguide.html">How to Use the Phonics Books</a>
-    </div>
-</div>
+    
     <!-- Announcements -->
     <div class="card">
         <h2>📢 Announcements</h2>
-        <p style="margin-bottom: 8px;">📝 MA 2 has been completed and archived</p>
-        <p style="margin-bottom: 8px;">⏰ MA 2 score submission deadline was April 15, 2026</p>
+        <p style="margin-bottom: 8px;">📝 <strong>Submit test paper by May 21, 2026</strong></p>
+        <p style="margin-bottom: 8px;">📌 MA 3 period: May 27 – Early June 2026</p>
         <p style="margin-bottom: 0;">📌 Next teacher meeting: TBA</p>
     </div>
 
@@ -229,11 +203,44 @@
         <h2>📋 Meeting Minutes</h2>
         <div class="material-item">
             <span>📝</span>
-            <a href="meetings/minute_260411.html">2026-04-11 – Pasir Putih Meeting</a>
+            <a href="https://juztuzeqi.github.io/KP2A-English-Teacher-Hub/meetings/minute_260411.html">2026-04-11 – Pasir Putih Meeting</a>
         </div>
         <p style="color: var(--muted); font-size: 0.85rem; margin-top: 8px;">
             📌 Phonics · MA 2 reminders · Level-Up Test updates
         </p>
+    </div>
+
+    <!-- MA 3 Section -->
+    <div class="card">
+        <h2>📦 MA 3 
+            <span class="badge active">OPEN</span>
+        </h2>
+        
+        <h3>📋 Monthly Assessment 3</h3>
+        
+        <!-- Calculator Promo - Main Method -->
+        <div class="calculator-promo">
+            <span style="font-size: 2rem;">🧮</span>
+            <h3>Score Calculator</h3>
+            <p>Paste messy CSV from WhatsApp → get clean scores instantly!</p>
+            <a href="score-calculator.html" target="_blank">➡️ Open Score Calculator ⬅️</a>
+            <small>No manual calculation needed. Just copy-paste.</small>
+        </div>
+        
+        <!-- Fallback: WhatsApp only if absolutely cannot use calculator -->
+        <div class="fallback-note">
+            <strong>📱 Only if you really cannot use the calculator above:</strong><br>
+            You may submit via WhatsApp using the <strong>same format as MA 2</strong> (see archived MA 2 below).<br>
+            But please try the calculator first — it's much faster and cleaner!
+        </div>
+        
+        <!-- Deadline Info -->
+        <div style="background: #e3f2fd; padding: 12px; border-radius: 6px; margin-top: 16px;">
+            <p style="color: #1f3c88;">
+                ⏰ <strong>MA 3 Assessment Period:</strong> May 27 – Early June 2026<br>
+                <small>Submit scores <strong>after</strong> the assessment ends.</small>
+            </p>
+        </div>
     </div>
 
     <!-- MA 1 Archive -->
@@ -244,7 +251,7 @@
         
         <div class="material-item">
             <span>📁</span>
-            <a href="https://drive.google.com/drive/u/0/folders/16_Hkf5cLOp4wLqrvIerYV0NJLx_albtA" target="_blank">MA 1 Materials & Results Archive</a>
+            <a href="https://drive.google.com/drive/u/0/folders/16_Hkf5cLOp4wLqrvIerYV0NJLx_albtA" target="_blank">MA 1 Materials &amp; Results Archive</a>
         </div>
         
         <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">
@@ -252,18 +259,16 @@
         </p>
     </div>
 
-    <!-- MA 2 Archive -->
+    <!-- MA 2 Archive (with WhatsApp format reference) -->
     <div class="card">
         <h2>📦 MA 2 Archive 
             <span class="badge archived">ARCHIVED</span>
         </h2>
         
-        <!-- MA 2 -->
         <h3>📋 Monthly Assessment 2 
             <span style="color: #6c757d; font-size: 0.9rem; font-weight: normal;">(April - Week 1)</span>
         </h3>
         
-        <!-- Materials Link -->
         <div class="material-item">
             <span>📁</span>
             <a href="https://drive.google.com/drive/folders/1QwVQZbbQF1cjLEMYLAWF-jJh4QkY83Xx?usp=drive_link" target="_blank">MA 2 Kit (Archived Files)</a>
@@ -271,55 +276,25 @@
 
         <div class="material-item">
             <span>📄</span>
-            <a href="https://docs.google.com/document/d/1jEXuyrB5XA-Bobo3E1adBT5UdtOaXY2l/edit?usp=drivesdk&ouid=104156122239448096857&rtpof=true&sd=true" target="_blank">MA template</a>
+            <a href="https://docs.google.com/document/d/1jEXuyrB5XA-Bobo3E1adBT5UdtOaXY2l/edit?usp=drivesdk&amp;ouid=104156122239448096857&amp;rtpof=true&amp;sd=true" target="_blank">MA template</a>
         </div>
 
         <div class="material-item">
             <span>📋</span>
-            <a href="ma_plan.html" target="_blank">MA Plan</a>
+            <a href="https://juztuzeqi.github.io/KP2A-English-Teacher-Hub/ma_plan.html" target="_blank">MA Plan</a>
         </div>  
         
-        <!-- READ FIRST NOTICE -->
-        <div class="read-first">
-            <div class="read-first-icon">📢</div>
-            <div class="read-first-text">
-                <p>"READ FIRST" first! <span style="font-size: 0.9rem; font-weight: normal;">(Yes, read it before anything else.)</span></p>
-                <small>⚠️ This MA has been archived. Reference only.</small>
-            </div>
-        </div>
-
-        <!-- WhatsApp Method (Archived) -->
-        <div class="whatsapp-method" style="background: #f5f5f5; border-left: 4px solid #6c757d;">
-            <p style="font-weight: bold; color: #495057;">📱 WhatsApp Submission Format (Archived):</p>
-            <p>✅ <strong>Simple format:</strong> Send message with:</p>
-            
-            <code>Student Name,Grade,Spelling Correct,Part A Correct,Part B Correct</code>
-            
-            <div class="example">
-                <strong>Examples:</strong><br>
+        <!-- Keep the WhatsApp format example as reference -->
+        <div style="background: #f5f5f5; padding: 16px; border-radius: 6px; margin-top: 16px;">
+            <p style="font-weight: bold; margin-bottom: 8px;">📱 WhatsApp Format (Reference Only):</p>
+            <code style="background: white; padding: 4px 8px; display: inline-block; margin-bottom: 8px;">Student Name,Grade,Spelling Correct,Part A Correct,Part B Correct</code>
+            <div style="background: white; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 0.85rem; margin: 8px 0;">
                 Jayvin,2,15,16,17<br>
                 Siti,3,14,15,16<br>
                 Budi,4,18,19,20
             </div>
-            
-            <p><strong>📝 Notes:</strong><br>
-            • <strong>Student Name</strong> = Student's full name<br>
-            • <strong>Grade</strong> = 1-9 (e.g., 2 for Grade 2, 5 for Grade 5)<br>
-            • <strong>Spelling Correct</strong> = Total correct answers for Spelling Test<br>
-            • <strong>Part A Correct</strong> = Total correct answers for Part A<br>
-            • <strong>Part B Correct</strong> = Total correct answers for Part B<br>
-            • Use <strong>commas (,) without spaces</strong> between items</p>
-            
-            <p style="margin-top: 12px; background: #fff; padding: 8px; border-radius: 4px;">
-                📌 <strong>Submission closed.</strong> All scores have been collected.
-            </p>
-        </div>
-        
-        <!-- Deadline Info (Archived) -->
-        <div style="background: #f5f5f5; padding: 12px; border-radius: 6px; margin-top: 16px;">
-            <p style="color: #495057;">
-                ⏰ <strong>MA 2 Deadline:</strong> April 15, 2026 (Passed)<br>
-                <small style="opacity: 0.8;">(Submission period has ended)</small>
+            <p style="font-size: 0.8rem; color: #6c757d; margin-top: 4px;">
+                📌 <strong>Note:</strong> This format is archived. For MA 3, please use the Score Calculator above first.
             </p>
         </div>
         
